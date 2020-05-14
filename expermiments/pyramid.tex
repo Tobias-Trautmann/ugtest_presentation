@@ -1,0 +1,23 @@
+\documentclass{beamer}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{intersections}
+%https://tex.stackexchange.com/questions/110522/how-to-elegantly-create-a-pyramid-hierarchy-in-tikz
+
+\begin{document}
+    \begin{frame}{Testpyramid}
+        \begin{tikzpicture}
+            \coordinate (A) at (-5,-1) {};
+            \coordinate (B) at ( 5,-1) {};
+            \coordinate (C) at (0,5) {};
+            \draw[name path=AC] (A) -- (C);
+            \draw[name path=BC] (B) -- (C);
+            \draw[name path=AB] (A) -- (B);
+
+            \foreach \y/\A in {0/G,1/E,2/C,3/A} {
+                \draw ($(A)!\y/4!(C)$) -- ($(B)!\y/4!(C)$)
+                node[midway,above] {\A};
+            }
+        \end{tikzpicture}
+    \end{frame}
+\end{document}
