@@ -63,15 +63,17 @@
         \subsection{Goals}
         \begin{frame}{Goals of testing}
            %nur geteste software erzeugt wert
+           %it := Software
            \begin{itemize}
-               \item meets its requirements\pause
-               \item performs its functions within an acceptable time\pause
-               \item is sufficiently usable\pause
-               \item can be run in its intended environments\pause
-               \item increase trust in results\pause
-               \item make code maintainable \& refactorable\pause
+               \item check wether it meets requirements\pause
+               \item check if it performs its functions within an acceptable time\pause
+               \item make it sufficiently usable\pause
+               \item can be run in its intended environments\pause%rephrase
+               \item increase trust in its results\pause
+               \item make code maintainable\pause
+               \item make code refactorable
            \end{itemize}
-           \Large{$\Rightarrow$ Testing software is necessary}
+           \Large{$\Rightarrow$ Testing software is a \textbf{necessity}}
         \end{frame}
 
         \subsectiontitle{Definitions}
@@ -80,7 +82,6 @@
             %makes it much easier to understand bugs during debugging and
             %allows to set priorities when developing test cases
             %HELP
-            mehr buch\\
             Where do defects come from?\\
             Prioritize defects\\
             Are you responsible for it?\\
@@ -112,16 +113,15 @@
                 \end{itemize}
             \end{itemize}
         \end{frame}
-
-        \subsection{Economics / Efficency}
-        \begin{frame}{Economics / Efficency}
+        %%WHAT DO I TEST?!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        \subsection{Efficency}
+        \begin{frame}{Efficency}
             %Talk about each test level, what it does what its for and when to do them
             %effort goes up with pyramid
             %time to develop goes up
-            %time
             % pesticide paradox\\%bugs become more subtle the more you cover
             % testen für qualität nicht für statistik!!
-            % amount of work put into testing 25\%-50\% of total  time
+            % amount of work put into testing 25\%-50\% of total  time!!!!!
             \centering
             \begin{tikzpicture}
                 \coordinate (A) at (-4,-1) {};
@@ -140,7 +140,7 @@
         \end{frame}
 
         \subsectiontitle{Approaches}%HELP
-        \begin{frame}{Continous Integration / Continous Delivery}
+        \begin{frame}{Continous Integration / Continous Delivery}%Do i want to present this??
             \centering
             \begin{figure}
                 \includegraphics[width=12cm]{./images/cicd.jpeg}
@@ -167,7 +167,6 @@
             \end{tikzpicture}
         \end{frame}
 
-        
 
     \sectiontitle{Boost.Test}
 
@@ -176,9 +175,9 @@
             \lstinputlisting[language=c++]{scripts/structure.cpp}
         \end{frame}
 
-        \begin{frame}{Error Levels}
+        \begin{frame}{Assertion Levels}
             \begin{tabular}{c|c|c}
-                error level &   error counter   &   test continuation   \\
+                assertion level &   error counter   &   test continuation   \\
                 \hline
                 warn    &       &   yes  \\
                 check   &   ++  &   yes \\
@@ -186,37 +185,28 @@
             \end{tabular}
         \end{frame}
 
-        \begin{frame}{Basic Checks}
-            \begin{itemize}
-                \item  \inlinecpp{BOOST_<level>(predicate)}
-                \item  \inlinecpp{BOOST_<level>_<GE,LE,GT,LT,NE>(left, right)}
-                \item  \inlinecpp{BOOST_<level>_EQUAL(left, right)}
-                \item  \inlinecpp{BOOST_IS_DEFINED(SYMBOL)}
-            \end{itemize}
-        \end{frame}
-        \begin{frame}{Warn}
-            \lstinputlisting[language=c++]{scripts/basic_warn.cpp}
-        \end{frame}
-        \begin{frame}{Check}
-            \lstinputlisting[language=c++]{scripts/basic_checks.cpp}
-        \end{frame}
-        \begin{frame}{Require}
-            \lstinputlisting[language=c++]{scripts/basic_require.cpp}
-        \end{frame}
+        % \begin{frame}{Basic Checks}
+        %     \begin{itemize}
+        %         \item  \inlinecpp{BOOST_<level>(predicate)}
+        %         \item  \inlinecpp{BOOST_<level>_<GE,LE,GT,LT,NE>(left, right)}
+        %         \item  \inlinecpp{BOOST_<level>_EQUAL(left, right)}
+        %         \item  \inlinecpp{BOOST_IS_DEFINED(SYMBOL)}
+        %     \end{itemize}
+        % \end{frame}
+        % \begin{frame}{Warn}
+        %     \lstinputlisting[language=c++]{scripts/basic_warn.cpp}
+        % \end{frame}
+        % \begin{frame}{Check}
+        %     \lstinputlisting[language=c++]{scripts/basic_checks.cpp}
+        % \end{frame}
+        % \begin{frame}{Require}
+        %     \lstinputlisting[language=c++]{scripts/basic_require.cpp}
+        % \end{frame}
 
-        \begin{frame}{Float point comparison}
-            \inlinecpp{BOOST_<level>_CLOSE(left, right, tolerance)}
-        \end{frame}
         \begin{frame}{Float point comparison}
             \lstinputlisting[language=c++]{scripts/floatpoint_comparison.cpp}
         \end{frame}
 
-        \begin{frame}{Exception handling}
-            \begin{itemize}
-                \item  \inlinecpp{BOOST_<level>_THROW(expression, exception_type)}
-                \item  \inlinecpp{BOOST_<level>_NO_THROW(expression)}
-            \end{itemize}
-        \end{frame}
         \begin{frame}{Exception handling}
             \lstinputlisting[language=c++]{scripts/exception_handling.cpp}      
         \end{frame}
@@ -238,9 +228,10 @@
                 \item add buildflags "--fprofile-arcs --ftest-coverage --fPIC" as well as no optimization for code coverage analysis
                 \item build ug with UGTest and your plugin activated
                 \item your plugin contains tests in a top level folder named "tests"
-                \item %this one right here executable named "ugtest_unit" and "ugtest_system" lands in ug4/bin
+                \item executable named "ugtest\_unit" and "ugtest\_system" lands in ug4/bin
                 \item \href{https://www.boost.org/doc/libs/1_58_0/libs/test/doc/html/utf/user-guide/runtime-config/reference.html}{list of params}
                 \item example: \lstinline[language=bash]{ug4/bin $ ./ugtest_unit --log-level=ALL --log-format=HRF}
+                \item Show result
             \end{itemize}
         \end{frame}
         
@@ -248,8 +239,9 @@
         \begin{frame}{Automatization with Jenkins}
             \begin{itemize}
                 \item Cobertura
-                \item two builds one serial, one parallel
+                \item two builds one serial, one parallel -> two test runs
                 \item Code coverage: gcovr can produce xml for cobertura
+                \item needs log\_format=XML
             \end{itemize}
         \end{frame}
 
@@ -264,9 +256,12 @@
     \section{Additional resources}
     \begin{frame}{Additional resources}
             \begin{itemize}
-                \item \href{https://www.boost.org/doc/libs/1_58_0/libs/test/}{Boost.Test documentation}
+                \item \href{https://www.boost.org/doc/libs/1_58_0/libs/test/}{Boost.Test 1.58 documentation}
                 \item \href{https://github.com/UG4/plugin_UGTest}{ugtests github}
                 \item Antipatterns
+                \item \href{https://docs.docker.com/}{Docker Documentation}
+                \item \href{https://www.boost.org/doc/libs/1_73_0/libs/test/}{newest Boost.Test} %(often better documentation of already existing features)
+                \item Concept stuff for software development
             \end{itemize}
     \end{frame}
 
