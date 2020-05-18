@@ -1,0 +1,19 @@
+teststruktur spiegelt source code struktur wieder
+
+tst_<original_file>.cpp
+
+allg testcase benennung  nachvollziehbarkeit!!
+
+testdaten generieren?
+
+ungenutzten code nicht testdatesten vorerstten
+
+testcode nicht in code coverage!!
+
+design for testabilty
+    complexität von funktion
+    single responsible principle
+
+(handouts)
+
+tooling: automatizierbarkeit, standartisierung!!

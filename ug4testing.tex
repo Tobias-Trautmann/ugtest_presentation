@@ -57,112 +57,93 @@
     \sectiontitle{Introduction to testing}
         %talk about differneces between debugging and testing
         %talk about coverage and ease of defect localistion
-        %systematisch!!
-        %tooling
+        %systematisch!
         %nicht so viel theorie!!!
         \subsection{Goals}
         \begin{frame}{Goals of testing}
-           %nur geteste software erzeugt wert
-           %it := Software
+            %nur geteste software erzeugt wert
+            %it := Software
+            %functional  non-functional
+            % testing destructive
            \begin{itemize}
-               \item check wether it meets requirements\pause
-               \item check if it performs its functions within an acceptable time\pause
-               \item make it sufficiently usable\pause
-               \item can be run in its intended environments\pause%rephrase
-               \item increase trust in its results\pause
-               \item make code maintainable\pause
-               \item make code refactorable
+                \item increase trust in its results\pause
+                \item make code maintainable\pause
+                \item make code refactorable\pause
+                \item make it sufficiently robust\pause
+                \item check if it performs its functions within an acceptable time\pause
+                \item check wether in runs its intended environments
            \end{itemize}
            \Large{$\Rightarrow$ Testing software is a \textbf{necessity}}
         \end{frame}
 
-        \subsectiontitle{Definitions}
+        \subsection{Defects}
         \begin{frame}{Defects}
             %make an explanation why definition of failure is importat
             %makes it much easier to understand bugs during debugging and
             %allows to set priorities when developing test cases
-            %HELP
+            % magic numbers
+            %fehlerfortpflanzung
             Where do defects come from?\\
-            Prioritize defects\\
+            \begin{itemize}
+                \item script error (lua)
+                \item bug in code
+                \item integration
+                \item error in design
+            \end{itemize}
             Are you responsible for it?\\
             mitigation
-            \begin{tabular}{c|c|c}
-                bug in code   & integration & error in design \\
-            \end{tabular}
+            runtime error logging
+            
+            $\Rightarrow$ Makes clear what to test with which priority
+
         \end{frame}
-
-        \begin{frame}{Definition of done}
-            %besonderer anwendungsfall geplante fluktuation (studenten kommen und gehen)
-            %code coverage
-            %HELP
-            \begin{itemize}
-                \item Code
-                \begin{itemize}
-                    \item 
-                \end{itemize}
-
-                \item Tests
-                \begin{itemize}
-                    \item Coverage
-                \end{itemize}
-
-                \item Documentation
-                \begin{itemize}
-                    \item User
-                    \item Maintainer
-                \end{itemize}
-            \end{itemize}
-        \end{frame}
-        %%WHAT DO I TEST?!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
         \subsection{Efficency}
-        \begin{frame}{Efficency}
+        \begin{frame}[plain]{Efficency}
             %Talk about each test level, what it does what its for and when to do them
             %effort goes up with pyramid
             %time to develop goes up
             % pesticide paradox\\%bugs become more subtle the more you cover
             % testen für qualität nicht für statistik!!
             % amount of work put into testing 25\%-50\% of total  time!!!!!
+            % entwicklungsbegleitendes testen
             \centering
             \begin{tikzpicture}
-                \coordinate (A) at (-4,-1) {};
-                \coordinate (B) at ( 4,-1) {};
-                \coordinate (C) at (0,4) {};
+                \coordinate (A) at (-4.25,-1) {};
+                \coordinate (B) at ( 4.25,-1) {};
+                \coordinate (C) at (0,4.5) {};
                 \draw[name path=AC] (A) -- (C);
                 \draw[name path=BC] (B) -- (C);
                 \draw[name path=AB] (A) -- (B);
     
-                \foreach \y/\A in {0/Unittests,1/Integrationtests,2/Systemtests} {
-                    \draw ($(A)!\y/3!(C)$) -- ($(B)!\y/3!(C)$) node[midway,above] {\A};\pause
+                \foreach \y/\A in {0/Unittests,1/Componenttests, 2/Integrationtests, 3/Systemtests} {
+                    \draw ($(A)!\y/4!(C)$) -- ($(B)!\y/4!(C)$) node[midway,above] {\A};\pause
                 }
-                \draw[thick, ->] (-4.5,4) -- (-4.5, -1) node[midway] {Time};\pause
-                \draw[thick, <-] (4.5,4) -- (4.5, -1) node[midway] {Complexity};
+                \draw[thick, ->] (-4.5,5) -- (-4.5, -1) node[midway] {Time to develop};\pause
+                \draw[thick, <-] (4.5,5) -- (4.5, -1) node[midway] {Testcomplexity};
             \end{tikzpicture}
         \end{frame}
 
-        \subsectiontitle{Approaches}%HELP
-        \begin{frame}{Continous Integration / Continous Delivery}%Do i want to present this??
+        \subsectiontitle{Approaches}
+        %short
+        \begin{frame}{Continous Integration / Continous Delivery}
             \centering
             \begin{figure}
                 \includegraphics[width=12cm]{./images/cicd.jpeg}
             \end{figure}
-            % https://www.mabl.com/hubfs/CICDBlog.png\\
-            % https://www.mabl.com/blog/what-is-cicd\\
-            % https://en.wikipedia.org/wiki/Continuous_delivery\\
-            % https://en.wikipedia.org/wiki/Continuous_integration\\
-            % https://www.mabl.com/blog/what-is-cicd
         \end{frame}
-
+        %short
         \begin{frame}{Test driven development}
             \centering
             \begin{tikzpicture}
-                \def \n {3}
-                \def \radius {2.75cm}
-                \def \margin {25}
-                \draw[<-,thick] (4,0) -- (6,0) node[midway, above] {write tests};
-                \foreach \s/\A/\C/\D in {1/Test fails/red/code, 2/Test passes/green/refactor, 3/Refactor/blue/next test}
+                \def \n {2}
+                \def \radius {2.3cm}
+                \def \margin {40}
+                \draw[->,thick] (-5,0) -- (-3.5,0) node[midway, above] {define tests};
+                \foreach \s/\A/\C/\N in {1/Test passes/green/next test,2/Test fails/red/code}
                 {
-                    \node[draw, circle,\C] at ({360/\n * (\s - 1)}:\radius) {\A};\pause
-                    \draw[->, dotted, thick, \C] ({360/\n * (\s - 1)+\margin}:\radius) arc ({360/\n * (\s - 1)+\margin}:{360/\n * (\s)-\margin}:\radius) node[midway, black] {\D};
+                    \node[draw, circle,\C] at ({360/\n * (\s - 1)}:\radius) {\A};
+                    \draw[->, >=latex] ({360/\n * (\s - 1)+\margin}:\radius) arc ({360/\n * (\s - 1)+\margin}:{360/\n * (\s)-\margin}:\radius) node[midway, above] {\N};
                 }
             \end{tikzpicture}
         \end{frame}
@@ -253,7 +234,19 @@
             \end{itemize}
         \end{frame}
 
-    \section{Additional resources}
+    \sectiontitle{Additional}
+    \begin{frame}{Open issues (?)}
+        \begin{itemize}
+            \item git branching \& releases
+            \item naming conventions for tests
+            \item definiton of done
+            \item tooling
+            \item error handling 
+            \item design for testability
+            \item test data
+            \item mocking
+        \end{itemize}
+    \end{frame}
     \begin{frame}{Additional resources}
             \begin{itemize}
                 \item \href{https://www.boost.org/doc/libs/1_58_0/libs/test/}{Boost.Test 1.58 documentation}
@@ -261,7 +254,7 @@
                 \item Antipatterns
                 \item \href{https://docs.docker.com/}{Docker Documentation}
                 \item \href{https://www.boost.org/doc/libs/1_73_0/libs/test/}{newest Boost.Test} %(often better documentation of already existing features)
-                \item Concept stuff for software development
+                \item \href{https://www.dreckstool.de}{dreckstools}
             \end{itemize}
     \end{frame}
 
