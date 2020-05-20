@@ -1,0 +1,18 @@
+\documentclass{beamer}
+\usepackage{tikz}
+\usetikzlibrary{graphs}
+\begin{document}
+    \begin{frame}
+        \begin{tikzpicture}
+            \graph[grow right = 2cm]{
+                "stable v0.2" -> {"resolving merge conflicts", "stable v0.1"};
+                "stable v0.1" ->{"see? done", "2first commit"};
+                "2first commit" -> {"first commit", "fast fix"};
+                "resolving merge confilcts" -> "development";
+                "development" -> "new feature";
+                "new feature" -> "first commit";
+                "fast fix" -> "see? done";
+            };
+        \end{tikzpicture}
+    \end{frame}
+\end{document}   

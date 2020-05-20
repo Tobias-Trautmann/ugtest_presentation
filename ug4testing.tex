@@ -4,8 +4,8 @@
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
 \usepackage{tikz}
-\usetikzlibrary{calc}
-\usetikzlibrary{intersections}
+\usetikzlibrary {intersections, graphs, calc}
+
 
 %30 min
 
@@ -24,7 +24,7 @@
     \section{#1}
     \begin{frame}
         \centering
-        \LARGE{#1}
+        \Huge{#1}
     \end{frame}
 }
 \newcommand{\subsectiontitle}[1]{
@@ -58,12 +58,10 @@
         %talk about differneces between debugging and testing
         %talk about coverage and ease of defect localistion
         %systematisch!
-        %nicht so viel theorie!!!
         \subsection{Goals}
         \begin{frame}{Goals of testing}
             %nur geteste software erzeugt wert
             %it := Software
-            %functional  non-functional
             % testing destructive
            \begin{itemize}
                 \item increase trust in its results\pause
@@ -71,7 +69,7 @@
                 \item make code refactorable\pause
                 \item make it sufficiently robust\pause
                 \item check if it performs its functions within an acceptable time\pause
-                \item check wether in runs its intended environments
+                \item check wether in runs its intended environments\pause
            \end{itemize}
            \Large{$\Rightarrow$ Testing software is a \textbf{necessity}}
         \end{frame}
@@ -83,17 +81,14 @@
             %allows to set priorities when developing test cases
             % magic numbers
             %fehlerfortpflanzung
+            % responsibilties
             Where do defects come from?\\
             \begin{itemize}
-                \item script error (lua)
-                \item bug in code
-                \item integration
                 \item error in design
+                \item bug in code
+                \item script error (lua)
+                \item integration
             \end{itemize}
-            Are you responsible for it?\\
-            mitigation
-            runtime error logging
-            
             $\Rightarrow$ Makes clear what to test with which priority
 
         \end{frame}
@@ -101,8 +96,6 @@
         \subsection{Efficency}
         \begin{frame}[plain]{Efficency}
             %Talk about each test level, what it does what its for and when to do them
-            %effort goes up with pyramid
-            %time to develop goes up
             % pesticide paradox\\%bugs become more subtle the more you cover
             % testen für qualität nicht für statistik!!
             % amount of work put into testing 25\%-50\% of total  time!!!!!
@@ -124,31 +117,6 @@
             \end{tikzpicture}
         \end{frame}
 
-        \subsectiontitle{Approaches}
-        %short
-        \begin{frame}{Continous Integration / Continous Delivery}
-            \centering
-            \begin{figure}
-                \includegraphics[width=12cm]{./images/cicd.jpeg}
-            \end{figure}
-        \end{frame}
-        %short
-        \begin{frame}{Test driven development}
-            \centering
-            \begin{tikzpicture}
-                \def \n {2}
-                \def \radius {2.3cm}
-                \def \margin {40}
-                \draw[->,thick] (-5,0) -- (-3.5,0) node[midway, above] {define tests};
-                \foreach \s/\A/\C/\N in {1/Test passes/green/next test,2/Test fails/red/code}
-                {
-                    \node[draw, circle,\C] at ({360/\n * (\s - 1)}:\radius) {\A};
-                    \draw[->, >=latex] ({360/\n * (\s - 1)+\margin}:\radius) arc ({360/\n * (\s - 1)+\margin}:{360/\n * (\s)-\margin}:\radius) node[midway, above] {\N};
-                }
-            \end{tikzpicture}
-        \end{frame}
-
-
     \sectiontitle{Boost.Test}
 
         \subsection{Basic usage}
@@ -158,31 +126,27 @@
 
         \begin{frame}{Assertion Levels}
             \begin{tabular}{c|c|c}
-                assertion level &   error counter   &   test continuation   \\
+                assertion level &   error counter   &   test case continuation   \\
                 \hline
-                warn    &       &   yes  \\
+                warn    &       &   yes \\
                 check   &   ++  &   yes \\
                 require &   ++  &   no  \\
             \end{tabular}
         \end{frame}
 
-        % \begin{frame}{Basic Checks}
-        %     \begin{itemize}
-        %         \item  \inlinecpp{BOOST_<level>(predicate)}
-        %         \item  \inlinecpp{BOOST_<level>_<GE,LE,GT,LT,NE>(left, right)}
-        %         \item  \inlinecpp{BOOST_<level>_EQUAL(left, right)}
-        %         \item  \inlinecpp{BOOST_IS_DEFINED(SYMBOL)}
-        %     \end{itemize}
-        % \end{frame}
-        % \begin{frame}{Warn}
-        %     \lstinputlisting[language=c++]{scripts/basic_warn.cpp}
-        % \end{frame}
-        % \begin{frame}{Check}
-        %     \lstinputlisting[language=c++]{scripts/basic_checks.cpp}
-        % \end{frame}
-        % \begin{frame}{Require}
-        %     \lstinputlisting[language=c++]{scripts/basic_require.cpp}
-        % \end{frame}
+        \begin{frame}{Basics}
+            \begin{itemize}
+                \item  \inlinecpp{BOOST_<level>(predicate)}
+                \item  \inlinecpp{BOOST_<level>_<GE,LE,GT,LT,NE>(left, right)}
+                \item  \inlinecpp{BOOST_<level>_EQUAL(left, right)}
+                \item  \inlinecpp{BOOST_IS_DEFINED(SYMBOL)}
+                \item  \inlinecpp{BOOST_<level>_MESSAGE(msg)}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}{Nice to know}
+            \lstinputlisting[language=c++]{scripts/nice2know.cpp}
+        \end{frame}
 
         \begin{frame}{Float point comparison}
             \lstinputlisting[language=c++]{scripts/floatpoint_comparison.cpp}
@@ -209,6 +173,7 @@
                 \item add buildflags "--fprofile-arcs --ftest-coverage --fPIC" as well as no optimization for code coverage analysis
                 \item build ug with UGTest and your plugin activated
                 \item your plugin contains tests in a top level folder named "tests"
+                \item Your tests include UGTest.h
                 \item executable named "ugtest\_unit" and "ugtest\_system" lands in ug4/bin
                 \item \href{https://www.boost.org/doc/libs/1_58_0/libs/test/doc/html/utf/user-guide/runtime-config/reference.html}{list of params}
                 \item example: \lstinline[language=bash]{ug4/bin $ ./ugtest_unit --log-level=ALL --log-format=HRF}
@@ -216,37 +181,81 @@
             \end{itemize}
         \end{frame}
         
-        \subsection{Jenkins}
-        \begin{frame}{Automatization with Jenkins}
-            \begin{itemize}
-                \item Cobertura
-                \item two builds one serial, one parallel -> two test runs
-                \item Code coverage: gcovr can produce xml for cobertura
-                \item needs log\_format=XML
-            \end{itemize}
-        \end{frame}
-
-        \subsection{Docker}
-        \begin{frame}{Automatization with Docker}
-            \begin{itemize}
-                \item Container stuff
-                \item \href{https://github.com/Tobias-Trautmann/docker4ug4}{Dockerfile}
-            \end{itemize}
-        \end{frame}
+        \subsectiontitle{Jenkins}
+        % \begin{frame}{Automatization with Jenkins}
+        %     %Don't show this just make a live demo
+        %     \begin{itemize}
+        %         \item Cobertura
+        %         \item two builds one serial, one parallel -> two test runs
+        %         \item Code coverage: gcovr can produce xml for cobertura
+        %         \item needs log\_format=XML
+        %         \item further automation possible
+        %     \end{itemize}
+        % \end{frame}
 
     \sectiontitle{Additional}
-    \begin{frame}{Open issues (?)}
+    \begin{frame}{Git branching \& releases}
+    %          
+    \end{frame}
+    %short
+    \begin{frame}{Continous Integration / Continous Delivery}
+        \centering
+        \begin{figure}
+            \includegraphics[width=12cm]{./images/cicd.jpeg}
+        \end{figure}
+    \end{frame}
+    %short
+    \begin{frame}{Test driven development}
+        \centering
+        \begin{tikzpicture}
+            \def \n {2}
+            \def \radius {2.3cm}
+            \def \margin {40}
+            \draw[->,thick] (-5,0) -- (-3.5,0) node[midway, above] {define tests};
+            \foreach \s/\A/\C/\N in {1/Test passes/green/next test,2/Test fails/red/code}
+            {
+                \node[draw, circle,\C] at ({360/\n * (\s - 1)}:\radius) {\A};
+                \draw[->, >=latex] ({360/\n * (\s - 1)+\margin}:\radius) arc ({360/\n * (\s - 1)+\margin}:{360/\n * (\s)-\margin}:\radius) node[midway, above] {\N};
+            }
+        \end{tikzpicture}
+    \end{frame}
+
+    \begin{frame}{Tooling}
         \begin{itemize}
-            \item git branching \& releases
-            \item naming conventions for tests
+            \item bugtracking
+            \item code coverage
+            \item documentation user / developer
+            \item Jenkins
+            \item github / gitlab
+            \item Docker?
+            \item update boost?
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Standartization}
+        \begin{itemize}
             \item definiton of done
-            \item tooling
-            \item error handling 
             \item design for testability
-            \item test data
+            \item test structure
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Automatization 2}
+        \begin{itemize}
+            \item automated teststructure creation 
+            \item Docker \href{https://github.com/Tobias-Trautmann/docker4ug4}{Dockerfile}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Advanced}
+        \begin{itemize}
+            \item exclude testcases from code coverage
+            \item error handling
+            \item test data%possible within boost see data-driven test cases
             \item mocking
         \end{itemize}
     \end{frame}
+    
     \begin{frame}{Additional resources}
             \begin{itemize}
                 \item \href{https://www.boost.org/doc/libs/1_58_0/libs/test/}{Boost.Test 1.58 documentation}
@@ -254,7 +263,9 @@
                 \item Antipatterns
                 \item \href{https://docs.docker.com/}{Docker Documentation}
                 \item \href{https://www.boost.org/doc/libs/1_73_0/libs/test/}{newest Boost.Test} %(often better documentation of already existing features)
-                \item \href{https://www.dreckstool.de}{dreckstools}
+                %\item \href{https://www.dreckstool.de}{dreckstools}
+                \item \href{https://www.boost.org/doc/libs/1_73_0/libs/test/doc/html/boost_test/testing_tools/summary.html}{BOOST.Test overview}
+                \item \href{https://docs.microsoft.com/en-us/azure/devops/repos/git/git-branching-guidance?view=azure-devops}{Microsoft branching}
             \end{itemize}
     \end{frame}
 
@@ -262,6 +273,7 @@
     \begin{frame}{References}
         \begin{itemize}
             \item \href{https://en.wikipedia.org/wiki/Software_testing}{wiki}
+            \item \href{https://www.boost.org/doc/libs/1_58_0/libs/test/}{Boost.Test 1.58 documentation}
             %definitly wrong pls fix
             \item Basiswissen Softwaretest
         \end{itemize}
