@@ -53,7 +53,6 @@
         \tableofcontents
     \end{frame}
 
-
     \sectiontitle{Introduction to testing}
         %talk about differneces between debugging and testing
         %talk about coverage and ease of defect localistion
@@ -170,14 +169,13 @@
         \subsection{Test executable}
         \begin{frame}{Test execution}
             \begin{itemize}
-                \item add buildflags "--fprofile-arcs --ftest-coverage --fPIC" as well as no optimization for code coverage analysis
+                \item add buildflags "-fprofile-arcs -ftest-coverage -fPIC" as well as no optimization for code coverage analysis
                 \item build ug with UGTest and your plugin activated
                 \item your plugin contains tests in a top level folder named "tests"
-                \item Your tests include UGTest.h
-                \item executable named "ugtest\_unit" and "ugtest\_system" lands in ug4/bin
-                \item \href{https://www.boost.org/doc/libs/1_58_0/libs/test/doc/html/utf/user-guide/runtime-config/reference.html}{list of params}
+                %\item Your tests include UGTest.h
+                \item executable named "ugtest\_unit" lands in ug4/bin
                 \item example: \lstinline[language=bash]{ug4/bin $ ./ugtest_unit --log-level=ALL --log-format=HRF}
-                \item Show result
+                % Show result
             \end{itemize}
         \end{frame}
         
@@ -194,8 +192,11 @@
         % \end{frame}
 
     \sectiontitle{Additional}
-    \begin{frame}{Git branching \& releases}
-    %          
+    \begin{frame}[plain]{Git branching \& releases}
+        \centering
+        \begin{figure}
+            \includegraphics[width=12cm]{images/branching.pdf} 
+        \end{figure}
     \end{frame}
     %short
     \begin{frame}{Continous Integration / Continous Delivery}
@@ -223,12 +224,13 @@
     \begin{frame}{Tooling}
         \begin{itemize}
             \item bugtracking
-            \item code coverage
-            \item documentation user / developer
-            \item Jenkins
-            \item github / gitlab
-            \item Docker?
+            \item documentation user / developer (Doxygen)
+            \item \href{https://www.jenkins.io/doc/}{Jenkins}
+            \item \href{https://www.gcovr.com/en/stable/guide.html}{gcovr (Code Coverage tool)}
+            \item git storage
+            \item \href{https://docs.docker.com/}{Docker} (CI/CD)
             \item update boost?
+            \item gcc + clang?
         \end{itemize}
     \end{frame}
 
@@ -237,6 +239,7 @@
             \item definiton of done
             \item design for testability
             \item test structure
+            \item naming conventions
         \end{itemize}
     \end{frame}
 
@@ -244,6 +247,8 @@
         \begin{itemize}
             \item automated teststructure creation 
             \item Docker \href{https://github.com/Tobias-Trautmann/docker4ug4}{Dockerfile}
+            \item Pipelines?
+            \item pull requests?
         \end{itemize}
     \end{frame}
 
@@ -258,24 +263,22 @@
     
     \begin{frame}{Additional resources}
             \begin{itemize}
-                \item \href{https://www.boost.org/doc/libs/1_58_0/libs/test/}{Boost.Test 1.58 documentation}
-                \item \href{https://github.com/UG4/plugin_UGTest}{ugtests github}
-                \item Antipatterns
-                \item \href{https://docs.docker.com/}{Docker Documentation}
+                \item \href{https://www.boost.org/doc/libs/1_58_0/libs/test/doc/html/utf/user-guide/runtime-config/reference.html}{Boost.Test executable list of params}
                 \item \href{https://www.boost.org/doc/libs/1_73_0/libs/test/}{newest Boost.Test} %(often better documentation of already existing features)
+                \item \href{https://github.com/UG4/plugin_UGTest}{ugtests github}
                 %\item \href{https://www.dreckstool.de}{dreckstools}
-                \item \href{https://www.boost.org/doc/libs/1_73_0/libs/test/doc/html/boost_test/testing_tools/summary.html}{BOOST.Test overview}
-                \item \href{https://docs.microsoft.com/en-us/azure/devops/repos/git/git-branching-guidance?view=azure-devops}{Microsoft branching}
+                \item \href{https://www.jenkins.io/doc/book/pipeline/syntax/}{Jenkins Pipeline}
             \end{itemize}
     \end{frame}
 
-    \section{Refereneces}
+    \section{References}
     \begin{frame}{References}
         \begin{itemize}
-            \item \href{https://en.wikipedia.org/wiki/Software_testing}{wiki}
+            \item \href{https://en.wikipedia.org/wiki/Software_testing}{Wikipedi Softwaretests}
             \item \href{https://www.boost.org/doc/libs/1_58_0/libs/test/}{Boost.Test 1.58 documentation}
             %definitly wrong pls fix
             \item Basiswissen Softwaretest
+            \item \href{https://docs.microsoft.com/en-us/azure/devops/repos/git/git-branching-guidance?view=azure-devops}{Microsoft branching}
         \end{itemize}
     \end{frame}
 \end{document}
