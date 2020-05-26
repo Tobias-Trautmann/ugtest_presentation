@@ -1,0 +1,139 @@
+\documentclass[a4paper]{scrbook}
+
+\author{Tobias Trautmann}
+\title{Softwaretests and ug4}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+    \newpage
+    \section{Introduction}
+    What is testing?\\
+    What do we test for?\\
+    Why do we need it?
+        \subsection{Debugging vs testing}
+        \begin{tabular}{c|c}
+            Debuggin    &  Testing  \\
+            \hline
+            unstructured    &   methodical  \\
+            only if a bug occurs    &   continous   \\
+            only during programming &   ~   \\
+            ~   &   can be highly automated \\
+            ~   &   covers different granularity
+        \end{tabular}
+        \subsection{Goals of testing}
+        \begin{itemize}
+            \item increase trust in its results
+            \begin{itemize}
+                \item assure that specific functions work
+            \end{itemize}
+            \item make code maintainable / refactorable
+            \begin{itemize}
+                \item check wether it still functions
+            \end{itemize}
+            \item make it sufficiently robust
+            \begin{itemize}
+                \item correct exception, edge case handling, corecctness of results, stability
+            \end{itemize}
+            \item check if it performs its functions within an acceptable time
+            \begin{itemize}
+                \item efficient enough
+            \end{itemize}
+            \item check wether in runs its intended environments
+            \begin{itemize}
+                \item can be build for its environments
+                \item environment specifics are considerd
+            \end{itemize}
+        \end{itemize}
+        \subsection{Cans and Can'ts}
+        Testing Software if done correct can do all of those things, but it can't guarantee universal functionailty and isn't a direct improvement to the software.
+        \subsection{Defects}
+        Defects are what we're looking for when testing. They can be seperated into different categories by where they come from. All of those defects can be detected by testing. Defects in software exist from the beginning. There is no such thing as deterioration.
+        \begin{tabular}{c|c|c}
+            bug             &   fault                   &   issue   \\
+            \hline
+            error in code   &   design is lackluster    &   requirements changed    \\
+            $\Rightarrow$instability   &   $\Rightarrow$instability           &   system still stable \\
+            e.g. missing semicolon  &   e.g. wrong approach &   e.g. different button arangement
+        \end{tabular}
+         \newline \newline
+        $\Rightarrow$ Shows up what can actually go wrong, which of those problems are how important and therefore enables testing efficiently.
+    \section{Test pyramid}
+    Not actually accurate, but enough for showcasing
+        \subsection{Unit tests}
+        whitebox tests, very narrow scope, very granular, no complexity, test unit of behaviour
+        \subsection{Component tests}
+        whitebox tests, slightly wider scope than unit tests, component works internally
+        \subsection{Integration tests}
+        whitebox tests, even wider scope, check interaction between components (e.g. interfaces)
+        \subsection{System tests}
+        whiebox/blackbox test, systemwide scope, test complex user interaction, comples, not granular
+        \subsection{Acceptance tests}
+        blackbox tests, user tests wether system is sufficently usable
+        \subsection{What \& How much to test}
+        Start writing tests as soon as you start programming functional code. Around one fourth to half of your dvelopment time should go into testing. It is nearly impossible to reach 100\% test coverage.
+        You will only find new bugs when writing new tests. The more you try to cover the more subtle bugs become.
+    \section{Boost.Test}
+    Boost.Test provides automated test discovery, test filters and labeling, exception handling, mocking, test data generation as well as logging.\\
+    You should write at least one test per function and constructor. Your tests will want to cover correctness of output, correct error handling, as well as edge cases (magic numbers).
+        \subsection{Structure of a test}
+        testsuite per file looks like this
+        \subsection{Basic checks}
+        will show this in a bit
+        assertion levels will be logged differntly
+        \subsection{Exceptions}
+        can catch exceptions and check wether no exception or a specific exception was thrown.
+        \subsection{Floating point comparison}
+        Is supported, can be relative or absolute
+        \subsection{Fixtures}
+        will be called for each testcase. can be defined for single test cases or whole suites
+        \subsection{Templates}
+        repetetive tests with different data types
+    \section{Testing}
+
+        \subsection{UGTest}
+        Buikd flags for gcovr. automated test file discovery. params for boost. test executable. own target?
+        \subsection{Jenkins}
+        automation server. can do a lot of things. show UGTest on jenkins. can do code coverage, code sanity, interactions with git, build, release processes, Pipelines
+        \subsection{Pipelines}
+        describes workflows, but automated. what steps do i need to do before my code gets a release? What do i want to automate? IS it efficent to automate this Process?
+    \section{Not quite testing but important}
+
+        \subsection{Software development strategies}
+        CICD: automate as much as you can->continous changing software  easily doable
+        tdd: extreme frontload for static projects, but testing included from the beginning\\
+        Test should be developed along with the productive code to minimize expenses afterwards
+        \subsection{Branching}
+        One Branch per feature. features get developed and tested, only when stable test, merge into maste/release branch, ocasional version branches for versioning and minor bugfixes in those versions.
+        pull request?
+        \subsection{Toolchain}
+        \begin{tabular}{l|c|c|c}
+            Categorie   &   Standad needed? &   Tool in use &   Tool to use\\
+            \hline\hline
+            OS    dev      &         ~ &   MacOS, Win10, CentOS, Ubuntu    &   ?   \\
+            OS    user      &         ~ &   MacOS, Win10, CentOS, Ubuntu    &   ?   \\
+            OS    server      &         ~ &   ?    &   ?   \\
+            Languages   &   y       &   C++17, Lua  &   C++17, Lua  \\   
+            IDE         &         ~  &  Ecllipse, VSCode    &   ?   \\
+            Versioning  &   y       &   git &   git \\
+            Publication platform    &   y   &   github  &   ?   \\
+            compiler    &   y       &   gcc, clang  &   ?   \\
+            Libraries   &   y       &   Boost 1.58, LAPLAS, BLAS, &     ?   \\
+            Documentation user  &   y   &   -   &   ?   \\
+            Documentation dev   &   y   &   Doxygen &   ?   \\
+            Bugtracking &   y   &   -   &   ?\\
+            Work asignment  &   ?   &   -   &   ?   \\
+            Automation server   &   y   &   Jenkins &   ?   \\
+            Testautomation  &   y   &   Boost   &   ?   \\
+            Build automation &  y   &   cmake   &   ?   \\
+            Code coverage   &   y   &   gcovr   &   ?   \\
+        \end{tabular}   
+        \subsection{Documentation}
+        Different Documentations for different people.
+        priorities: 1. devloper to maintain code, 2. user to use product
+        Code is Documentation but not enough.
+        \subsection{Design for testability}
+
+        \subsection{Definiton of done}
+
+\end{document}

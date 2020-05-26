@@ -11,7 +11,7 @@
 
 \lstset{
   basicstyle=\footnotesize,        % the size of the fonts that are used for the code
-  breakatwhitespace=true,         % sets if automatic breaks should only happen at whitespace
+  breakatwhitespace=true,          % sets if automatic breaks should only happen at whitespace
   breaklines=true,                 % sets automatic line breaking
   commentstyle=\color{green},      % comment style
   keywordstyle=\color{blue},       % keyword style
@@ -54,14 +54,11 @@
     \end{frame}
 
     \sectiontitle{Introduction to testing}
-        %talk about differneces between debugging and testing
-        %talk about coverage and ease of defect localistion
-        %systematisch!
+        % Vertrauen ins testsystem? z.B. Review (Review Kriterien, Methoden)? Studenten untereinander codereview?
         \subsection{Goals}
         \begin{frame}{Goals of testing}
             %nur geteste software erzeugt wert
             %it := Software
-            % testing destructive
            \begin{itemize}
                 \item increase trust in its results\pause
                 \item make code maintainable\pause
@@ -75,12 +72,6 @@
 
         \subsection{Defects}
         \begin{frame}{Defects}
-            %make an explanation why definition of failure is importat
-            %makes it much easier to understand bugs during debugging and
-            %allows to set priorities when developing test cases
-            % magic numbers
-            %fehlerfortpflanzung
-            % responsibilties
             Where do defects come from?\\
             \begin{itemize}
                 \item error in design
@@ -92,8 +83,8 @@
 
         \end{frame}
         
-        \subsection{Efficency}
-        \begin{frame}[plain]{Efficency}
+        \subsection{Test Pyramid}
+        \begin{frame}[plain]{Test Pyramid}
             %Talk about each test level, what it does what its for and when to do them
             % pesticide paradox\\%bugs become more subtle the more you cover
             % testen für qualität nicht für statistik!!
@@ -147,7 +138,7 @@
             \lstinputlisting[language=c++]{scripts/nice2know.cpp}
         \end{frame}
 
-        \begin{frame}{Float point comparison}
+        \begin{frame}{Floating point comparison}
             \lstinputlisting[language=c++]{scripts/floatpoint_comparison.cpp}
         \end{frame}
 
@@ -180,24 +171,8 @@
         \end{frame}
         
         \subsectiontitle{Jenkins}
-        % \begin{frame}{Automatization with Jenkins}
-        %     %Don't show this just make a live demo
-        %     \begin{itemize}
-        %         \item Cobertura
-        %         \item two builds one serial, one parallel -> two test runs
-        %         \item Code coverage: gcovr can produce xml for cobertura
-        %         \item needs log\_format=XML
-        %         \item further automation possible
-        %     \end{itemize}
-        % \end{frame}
 
     \sectiontitle{Additional}
-    \begin{frame}[plain]{Git branching \& releases}
-        \centering
-        \begin{figure}
-            \includegraphics[width=12cm]{images/branching.pdf} 
-        \end{figure}
-    \end{frame}
     %short
     \begin{frame}{Continous Integration / Continous Delivery}
         \centering
@@ -205,6 +180,15 @@
             \includegraphics[width=12cm]{./images/cicd.jpeg}
         \end{figure}
     \end{frame}
+
+    \begin{frame}[plain]{Git branching \& releases}
+        \centering
+        \begin{figure}
+            \includegraphics[width=12cm]{images/branching.pdf} 
+        \end{figure}
+        sauce
+    \end{frame}
+   
     %short
     \begin{frame}{Test driven development}
         \centering
@@ -221,20 +205,22 @@
         \end{tikzpicture}
     \end{frame}
 
-    \begin{frame}{Tooling}
+    \begin{frame}{Toolchain}
         \begin{itemize}
             \item bugtracking
             \item documentation user / developer (Doxygen)
             \item \href{https://www.jenkins.io/doc/}{Jenkins}
             \item \href{https://www.gcovr.com/en/stable/guide.html}{gcovr (Code Coverage tool)}
             \item git storage
-            \item \href{https://docs.docker.com/}{Docker} (CI/CD)
+            \item \href{https://docs.docker.com/}{Docker}
             \item update boost?
             \item gcc + clang?
+            \item Anforderung nacherfassen!! Danach Tolls richten
+            \item wie requiremetns testen?
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Standartization}
+    \begin{frame}{Standardization}
         \begin{itemize}
             \item definiton of done
             \item design for testability
@@ -243,19 +229,8 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Automatization 2}
-        \begin{itemize}
-            \item automated teststructure creation 
-            \item Docker \href{https://github.com/Tobias-Trautmann/docker4ug4}{Dockerfile}
-            \item Pipelines?
-            \item pull requests?
-        \end{itemize}
-    \end{frame}
-
     \begin{frame}{Advanced}
         \begin{itemize}
-            \item exclude testcases from code coverage
-            \item error handling
             \item test data%possible within boost see data-driven test cases
             \item mocking
         \end{itemize}
@@ -268,6 +243,9 @@
                 \item \href{https://github.com/UG4/plugin_UGTest}{ugtests github}
                 %\item \href{https://www.dreckstool.de}{dreckstools}
                 \item \href{https://www.jenkins.io/doc/book/pipeline/syntax/}{Jenkins Pipeline}
+                \item \href{https://martinfowler.com/articles/practical-test-pyramid.html}{Martin Fowler}
+                \item \href{https://en.wikipedia.org/wiki/SOLID}{SOLID principle}
+                \item \href{https://www.jenkins.io/doc/}{Jenkins docs}
             \end{itemize}
     \end{frame}
 
